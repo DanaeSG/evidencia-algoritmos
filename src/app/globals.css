@@ -1,18 +1,20 @@
+/* src/styles/globals.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+/* Variables CSS */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f8f1f4; /* Rosa pastel */
+    --foreground: #2c2c2c; /* Texto oscuro */
+    --rosa-pastel: #f8d0e3;
+    --rosa-fuerte: #d5006d;
+    --verde-claro: #a8e6cf;
+    --verde-oscuro: #009688;
+    --azul-claro: #80deea;
+    --azul-oscuro: #00796b;
   }
-}
 
 body {
   color: var(--foreground);
@@ -24,4 +26,40 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Estilos de botones */
+.button {
+  border-radius: 0.5rem; /* Redondear los bordes */
+  padding: 0.5rem 1rem; /* Padding interno */
+  transition: background-color 0.3s ease-in-out; /* Efecto de transición */
+}
+
+/* Colores de botones */
+.button-rosa {
+  background-color: #d5006d; /* Rosa fuerte */
+  color: white; /* Color de texto */
+}
+
+.button-rosa:hover {
+  background-color: #f8d0e3; /* Cambiar a rosa pastel al hacer hover */
+}
+
+/* Otros estilos de botones */
+.button-verde {
+  background-color: #009688; /* Verde oscuro */
+  color: white;
+}
+
+.button-verde:hover {
+  background-color: #a8e6cf; /* Verde claro */
+}
+
+.button-azul {
+  background-color: #00796b; /* Azul oscuro */
+  color: white;
+}
+
+.button-azul:hover {
+  background-color: #80deea; /* Azul claro */
 }
