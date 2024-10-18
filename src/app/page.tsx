@@ -28,7 +28,7 @@ const HomePage = () => {
         <Search texto={texto1} /> {/* Pasa el texto cargado al componente Search */}
         <Palindrome texto={texto1} /> {/* Pasa el texto cargado al componente Palindrome */}
         <Similarity texto1={texto1} texto2={texto2} /> {/* Pasa ambos textos al componente Similarity */}
-        <Autocomplete />
+        <Autocomplete text={texto1}/>
       </div>
       <footer className="mt-20 text-center">
         <p className="text-gray-600">
