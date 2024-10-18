@@ -9,7 +9,7 @@ const Autocomplete = () => {
     const [trieRaiz] = useState(new NodoTrie());
 
     // Palabras a insertar en el Trie
-    const palabras = ["and", "ant", "do", "geek", "dad", "ball", "niño", "año", "acción"];
+    const palabras = ["perro", "gato", "perros", "patos", "puercos"];
 
     useEffect(() => {
         // Insertar palabras en el Trie al cargar el componente
@@ -22,7 +22,9 @@ const Autocomplete = () => {
         
         if (value) {
             const resultado = autocompletar(trieRaiz, value);
+            console.log(resultado)
             setSugerencias(resultado);
+            console.log(trieRaiz, "--", value)
         } else {
             setSugerencias([]); // Limpiar sugerencias si el campo está vacío
         }

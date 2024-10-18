@@ -10,12 +10,14 @@ class NodoTrie {
 
 // Función para obtener el índice correspondiente al carácter
 function obtenerIndice(c) {
+    const aCharCode = 'a'.charCodeAt(0); // Código ASCII de 'a'
+
     if (c >= 'a' && c <= 'n') {
-        return c.charCodeAt(0) - 'a'.charCodeAt(0); // Letras de 'a' a 'n'
+        return c.charCodeAt(0) - aCharCode; // Letras de 'a' a 'n'
     } else if (c === 'ñ') {
         return 14; // La "ñ" será el índice 14
     } else if (c >= 'o' && c <= 'z') {
-        return c.charCodeAt(0) - 'a'.charCodeAt(0) + 1; // Ajuste de índice para letras después de la "ñ"
+        return c.charCodeAt(0) - 'o'.charCodeAt(0) + 15; // Ajuste correcto para letras después de la "ñ"
     }
     return -1; // Carácter no válido
 }
@@ -74,8 +76,10 @@ function autocompletar(raiz, prefijo) {
         }
         actual = actual.hijos[indice];
     }
-    return encontrarPalabras(raiz, prefijo);
+    // Pasar el nodo actual (último nodo del prefijo) a encontrarPalabras
+    return encontrarPalabras(actual, prefijo); 
 }
+
 
 // Método auxiliar para encontrar todas las palabras que comienzan con un prefijo
 function encontrarPalabras(nodo, prefijo) {
@@ -85,11 +89,22 @@ function encontrarPalabras(nodo, prefijo) {
     }
     for (let i = 0; i < nodo.hijos.length; i++) {
         if (nodo.hijos[i]) {
-            const letra = i === 14 ? 'ñ' : String.fromCharCode(i + 'a'.charCodeAt(0)); // Ajuste para la "ñ"
+            // Si el índice es 14, representa la "ñ"
+            let letra;
+            if (i === 14) {
+                letra = 'ñ';
+            } else if (i < 14) {
+                // Letras de 'a' a 'n'
+                letra = String.fromCharCode(i + 'a'.charCodeAt(0));
+            } else {
+                // Letras de 'o' a 'z', después de la "ñ"
+                letra = String.fromCharCode(i + 'a'.charCodeAt(0) - 1);
+            }
             palabras = palabras.concat(encontrarPalabras(nodo.hijos[i], prefijo + letra));
         }
     }
     return palabras;
 }
+
 
 export { NodoTrie, insertarClave, buscarClave, autocompletar };
