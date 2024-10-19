@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import Manacher from '../utils/manacher'; // Asegúrate de que la ruta sea correcta
+import Manacher from '../utils/manacher'; 
 
 const Palindrome = ({ texto, setPalindromeSubstring, handleNewOperation }) => {
   const [longestPalindrome, setLongestPalindrome] = useState('');

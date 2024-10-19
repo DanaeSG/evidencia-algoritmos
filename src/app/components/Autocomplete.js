@@ -1,7 +1,7 @@
 // src/app/components/Autocomplete.js
 "use client";
 import React, { useState, useEffect } from 'react';
-import { NodoTrie, insertarClave, autocompletar } from '../utils/trie'; // Asegúrate de que la ruta sea correcta
+import { NodoTrie, insertarClave, autocompletar } from '../utils/trie'; 
 
 // Función para normalizar caracteres (elimina acentos y convierte a minúsculas)
 function normalizarTexto(texto) {
