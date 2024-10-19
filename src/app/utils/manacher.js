@@ -29,8 +29,9 @@ function Manacher(s) {
         }
     }
 
+    // Calcular el índice de inicio en el texto original
     const inicio = (mitad_index - max_longitud) / 2;
-    return { substring: s.substr(inicio, max_longitud), start: inicio, length: max_longitud };
+    return { substring: s.substr(inicio, max_longitud), start: Math.floor(inicio), length: max_longitud };
 }
 
 export default Manacher;
