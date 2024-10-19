@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from 'react';
-import LCS from '../utils/lcs'; // Asegúrate de que la ruta sea correcta
-
-const Similarity = ({ texto1, texto2 }) => {
-  const [lcsResult, setLcsResult] = useState(0);
+import LCS from '../utils/lcs'; 
+const Similarity = ({ texto1, texto2, setCommonSubstring }) => {
+  const [lcsResult, setLcsResult] = useState({ length: 0, substring: '' });
 
   const handleFindSimilarity = () => {
-    const result = LCS(texto1, texto2); // Usa la función LCS
+    const result = LCS(texto1, texto2);
     setLcsResult(result);
+    setCommonSubstring(result.substring);
   };
 
   return (
@@ -15,17 +15,22 @@ const Similarity = ({ texto1, texto2 }) => {
       <h2 className="text-xl font-semibold text-rosa-fuerte">Similitud entre Textos</h2>
       <button
         onClick={handleFindSimilarity}
+        disabled={!texto1 || !texto2} // Desactiva el botón si texto1 o texto2 están vacíos
         style={{
-            backgroundColor: '#d85e98', // Cambia el color de fondo aquí
-            color: 'white', // Asegúrate de que el texto sea blanco
-            border: '2px solid #d85e98',
+          backgroundColor: '#d85e98',
+          color: 'white',
+          border: '2px solid #d85e98',
+          opacity: !texto1 || !texto2 ? 0.5 : 1, // Cambia la opacidad cuando está deshabilitado
+          cursor: !texto1 || !texto2 ? 'not-allowed' : 'pointer' // Cambia el cursor cuando está deshabilitado
         }}
         className="px-4 py-2 rounded-lg hover:bg-rosa-pastel transition duration-300 w-full shadow-md hover:shadow-lg"
-    >
+      >
         Encontrar Similitud
-    </button>
-      {lcsResult > 0 && (
-        <p className="mt-4">La longitud de la subcadena común más larga es: <strong>{lcsResult}</strong></p>
+      </button>
+      {lcsResult.substring && (
+        <p className="mt-4">
+          La subcadena común más larga es: <strong>{lcsResult.substring}</strong>
+        </p>
       )}
     </div>
   );

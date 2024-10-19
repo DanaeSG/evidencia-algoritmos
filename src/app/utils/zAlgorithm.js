@@ -1,7 +1,7 @@
 // src/app/utils/search.js
 
 function arregloZ(S) {
-    const Z = [];
+    const Z = new Array(S.length).fill(0); // Inicializar el arreglo Z con ceros
     const n = S.length;
     let l = 0, r = 0;
 
@@ -31,20 +31,16 @@ function arregloZ(S) {
 }
 
 function Z(T, P) {
-    const S = P + "$" + T;
+    const S = P + "$" + T; // Concatenar el patrón, un delimitador y el texto
     const ZArray = arregloZ(S);
-    const posiciones = []; // Para almacenar posiciones encontradas
-    for (let i = 0; i < S.length; i++) {
+    const posiciones = []; // Para almacenar las posiciones encontradas
+
+    for (let i = P.length + 1; i < S.length; i++) { // Empezar después del delimitador
         if (ZArray[i] === P.length) {
             posiciones.push(i - P.length - 1); // Guardar posición encontrada
         }
     }
-    return posiciones; // Retornar posiciones encontradas
+    return posiciones; // Retornar todas las posiciones encontradas
 }
-
-// Ejemplo de uso
-const texto = "abracadabra";
-const patron = "abra";
-console.log(Z(texto, patron)); // Debería imprimir [0, 7]
 
 export { arregloZ, Z };

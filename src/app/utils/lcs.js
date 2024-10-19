@@ -2,25 +2,26 @@ function LCS(s1, s2) {
     const m = s1.length;
     const n = s2.length;
 
-    // Array para almacenar el resultado anterior
-    let anterior = new Array(n + 1).fill(0);
-    
-    let resultado = 0;
+    // Matriz para almacenar la longitud de las subcadenas
+    const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+    let maxLength = 0;
+    let endIndex = 0; // Para rastrear el final de la subcadena
+
     for (let i = 1; i <= m; i++) {
-        // Array para almacenar el resultado actual
-        let actual = new Array(n + 1).fill(0);
         for (let j = 1; j <= n; j++) {
             if (s1[i - 1] === s2[j - 1]) {
-                actual[j] = anterior[j - 1] + 1;
-                resultado = Math.max(resultado, actual[j]);
-            } else {
-                actual[j] = 0;
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                if (dp[i][j] > maxLength) {
+                    maxLength = dp[i][j];
+                    endIndex = i; // Actualizar el índice final
+                }
             }
         }
-        // Actualizar el resultado anterior para la siguiente iteración
-        anterior = actual;
     }
-    return resultado;
+
+    // Extraer la subcadena común más larga
+    const longestCommonSubstring = s1.substring(endIndex - maxLength, endIndex);
+    return { length: maxLength, substring: longestCommonSubstring };
 }
 
 export default LCS;
