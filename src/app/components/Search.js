@@ -2,6 +2,14 @@
 import React, { useState } from 'react';
 import { Z } from '../utils/zAlgorithm';
 
+// Función para normalizar caracteres (elimina acentos y convierte a minúsculas)
+function normalizarTexto(texto) {
+    return texto
+        .toLowerCase() // Convierte a minúsculas
+        .normalize('NFD') // Normaliza para separar los acentos de los caracteres base
+        .replace(/[\u0300-\u036f]/g, ''); // Elimina los acentos
+}
+
 const Search = ({ texto, setSearchHighlight, handleNewOperation }) => {
     const [patron, setPatron] = useState('');
     const [resultados, setResultados] = useState([]);
@@ -9,8 +17,14 @@ const Search = ({ texto, setSearchHighlight, handleNewOperation }) => {
 
     const handleSearch = () => {
         handleNewOperation(); 
-        const posiciones = Z(texto, patron);
+
+        // Normalizamos tanto el texto como el patrón antes de buscar
+        const textoNormalizado = normalizarTexto(texto);
+        const patronNormalizado = normalizarTexto(patron);
+        
+        const posiciones = Z(textoNormalizado, patronNormalizado);
         setResultados(posiciones);
+        
         if (posiciones.length > 0) {
             setIndiceActual(0);
             setSearchHighlight({ substring: patron, index: posiciones[0] });
