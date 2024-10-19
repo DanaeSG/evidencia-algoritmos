@@ -17,7 +17,7 @@ function obtenerIndice(c) {
     } else if (c === 'ñ') {
         return 14; // La "ñ" será el índice 14
     } else if (c >= 'o' && c <= 'z') {
-        return c.charCodeAt(0) - 'o'.charCodeAt(0) + 15; // Ajuste correcto para letras después de la "ñ"
+        return c.charCodeAt(0) - 'o'.charCodeAt(0) + 15; // Ajuste para letras después de la "ñ"
     }
     return -1; // Carácter no válido
 }
@@ -25,18 +25,20 @@ function obtenerIndice(c) {
 // Función para normalizar caracteres con acento
 function normalizarCaracter(c) {
     switch (c) {
-        case 'á': return 'a';
-        case 'é': return 'e';
-        case 'í': return 'i';
-        case 'ó': return 'o';
-        case 'ú': return 'u';
-        default: return c; // Mantener el carácter si no tiene acento
+        case 'á': case 'à': case 'ä': return 'a';
+        case 'é': case 'è': case 'ë': return 'e';
+        case 'í': case 'ì': case 'ï': return 'i';
+        case 'ó': case 'ò': case 'ö': return 'o';
+        case 'ú': case 'ù': case 'ü': return 'u';
+        default: return c.toLowerCase(); // Convertir a minúsculas y mantener si no tiene acento
     }
 }
 
 // Método para insertar una clave en el Trie
 function insertarClave(raiz, clave) {
     let actual = raiz;
+    
+    // Normalizamos la clave completa antes de insertarla
     for (let c of clave) {
         c = normalizarCaracter(c); // Normalizar el carácter
         const indice = obtenerIndice(c);
@@ -54,11 +56,13 @@ function insertarClave(raiz, clave) {
 // Método para buscar una clave en el Trie
 function buscarClave(raiz, clave) {
     let actual = raiz;
+
+    // Normalizamos la clave completa antes de buscarla
     for (let c of clave) {
         c = normalizarCaracter(c); // Normalizar el carácter
         const indice = obtenerIndice(c);
         if (indice === -1 || actual.hijos[indice] === null) {
-            return false;
+            return false; // Si no hay coincidencia, la clave no está en el Trie
         }
         actual = actual.hijos[indice];
     }
@@ -68,6 +72,8 @@ function buscarClave(raiz, clave) {
 // Método para autocompletar desde el Trie
 function autocompletar(raiz, prefijo) {
     let actual = raiz;
+
+    // Normalizamos el prefijo antes de autocompletar
     for (let c of prefijo) {
         c = normalizarCaracter(c); // Normalizar el carácter
         const indice = obtenerIndice(c);
@@ -80,13 +86,14 @@ function autocompletar(raiz, prefijo) {
     return encontrarPalabras(actual, prefijo); 
 }
 
-
 // Método auxiliar para encontrar todas las palabras que comienzan con un prefijo
 function encontrarPalabras(nodo, prefijo) {
     let palabras = [];
     if (nodo.esFinDePalabra) {
         palabras.push(prefijo);
     }
+    
+    // Recorremos todos los hijos del nodo actual
     for (let i = 0; i < nodo.hijos.length; i++) {
         if (nodo.hijos[i]) {
             // Si el índice es 14, representa la "ñ"
@@ -100,11 +107,11 @@ function encontrarPalabras(nodo, prefijo) {
                 // Letras de 'o' a 'z', después de la "ñ"
                 letra = String.fromCharCode(i + 'a'.charCodeAt(0) - 1);
             }
+            // Llamada recursiva para encontrar palabras en los subárboles
             palabras = palabras.concat(encontrarPalabras(nodo.hijos[i], prefijo + letra));
         }
     }
     return palabras;
 }
-
 
 export { NodoTrie, insertarClave, buscarClave, autocompletar };
