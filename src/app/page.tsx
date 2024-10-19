@@ -32,7 +32,7 @@ const HomePage = () => {
         <Search texto={texto1} setSearchHighlight={setSearchHighlight} />
         <Palindrome texto={texto1} setPalindromeSubstring={setPalindromeSubstring} /> 
         <Similarity texto1={texto1} texto2={texto2} setCommonSubstring={setCommonSubstring} />
-        <Autocomplete />
+        <Autocomplete text={texto1}/>
       </div>
       <footer className="mt-20 text-center">
         <p className="text-gray-600">
