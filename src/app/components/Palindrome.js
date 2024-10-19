@@ -3,10 +3,11 @@
 import React, { useState } from 'react';
 import Manacher from '../utils/manacher'; // Asegúrate de que la ruta sea correcta
 
-const Palindrome = ({ texto, setPalindromeSubstring }) => {
+const Palindrome = ({ texto, setPalindromeSubstring, handleNewOperation }) => {
   const [longestPalindrome, setLongestPalindrome] = useState('');
 
   const handleFindPalindrome = () => {
+    handleNewOperation();
     const result = Manacher(texto);
     setLongestPalindrome(result.substring);
     setPalindromeSubstring(result.substring);

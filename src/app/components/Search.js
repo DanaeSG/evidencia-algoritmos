@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { Z } from '../utils/zAlgorithm';
 
-const Search = ({ texto, setSearchHighlight }) => {
+const Search = ({ texto, setSearchHighlight, handleNewOperation }) => {
     const [patron, setPatron] = useState('');
     const [resultados, setResultados] = useState([]);
     const [indiceActual, setIndiceActual] = useState(0);
 
     const handleSearch = () => {
+        handleNewOperation(); 
         const posiciones = Z(texto, patron);
         setResultados(posiciones);
         if (posiciones.length > 0) {

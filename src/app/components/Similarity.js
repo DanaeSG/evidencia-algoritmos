@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from 'react';
 import LCS from '../utils/lcs'; 
-const Similarity = ({ texto1, texto2, setCommonSubstring }) => {
+const Similarity = ({ texto1, texto2, setCommonSubstring, handleNewOperation }) => {
   const [lcsResult, setLcsResult] = useState({ length: 0, substring: '' });
 
   const handleFindSimilarity = () => {
+    handleNewOperation(); 
     const result = LCS(texto1, texto2);
     setLcsResult(result);
     setCommonSubstring(result.substring);
